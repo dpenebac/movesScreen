@@ -2,7 +2,11 @@ import pygame
 from pygame.locals import *
 
 charList = ["ryu","ken","chunLi"]
+<<<<<<< HEAD
 size = (400,240) #center for characters
+=======
+size = (1300,1000)
+>>>>>>> f8e5785231cf0270e97d6c2d3bf9977ebe273c91
 
 class move(pygame.sprite.Sprite):
     def __init__(self,image,screen):
@@ -11,12 +15,12 @@ class move(pygame.sprite.Sprite):
 
     def changeImage(self,image,screen):
         self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image,screen.get_size())
-        self.rect = pygame.Rect(self.image.get_rect(center = size))
+        self.image = pygame.transform.scale(self.image,size)
+        self.rect = pygame.Rect(self.image.get_rect(center = (size[0] / 2, size[1] / 2)))
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((800,480))
+    screen = pygame.display.set_mode(size)
     background = move(charList[0] + ".png",screen)
     index = 0
 
