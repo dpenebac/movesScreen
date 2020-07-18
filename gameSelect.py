@@ -1,22 +1,13 @@
 import pygame
 from pygame.locals import *
 
-charList = ["ryu","ken","chunLi"]
-size = (1300,1000)
-
-class move(pygame.sprite.Sprite):
-    def __init__(self,image,screen):
+class scrollWheel(pygame.sprite.Sprite):
+    def __init__(self,gameList,screen):
         pygame.sprite.Sprite.__init__(self)
-        self.changeImage(image,screen)
-
-    def changeImage(self,image,screen):
-        self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image,size)
-        self.rect = pygame.Rect(self.image.get_rect(center = (size[0] / 2, size[1] / 2)))
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode((800,480))
     background = move(charList[0] + ".png",screen)
     index = 0
 
