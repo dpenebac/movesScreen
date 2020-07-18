@@ -2,30 +2,46 @@ import pygame
 from pygame.locals import *
 from collections import deque
 
-size = (1300,1000)
-gameList = ["streetFighter.png","pacman.png","digDug.png","iceClimbers.png","donkeyKong.png","contra.png"]
+size = (800,400)
+gameList = ["streetFighter","pacman","digDug","iceClimbers","donkeyKong","contra"]
 
 class game(pygame.sprite.Sprite):
     def __init__(self,image):
         pygame.sprite.Sprite.__init__(self)
         self.name = image
-        self.image = pygame.image.load(image)
-        self.size = (650,200) ##(size[0] / 2, size[1] / 5)
+        self.image = pygame.image.load(image + ".png")
+        self.size = (int(size[0] / 2), int(size[1] / 5))
         self.image = pygame.transform.scale(self.image,self.size)
         self.rect = pygame.Rect(self.image.get_rect(topleft = (0,0)))
 
     def setPos(self,pos):
         self.rect = pygame.Rect(self.image.get_rect(topleft = pos))
 
+class gameDisplay(pygame.sprite.Sprite):
+    def __init__(self,image):
+        pygame.sprite.Sprite.__init__(self)
+        self.name = image
+        self.image = pygame.image.load(image + ".png")
+        self.size = (int(size[0] / 2), size[1])
+        self.image = pygame.transform.scale(self.image,self.size)
+        self.rect = pygame.Rect(self.image.get_rect(topleft = (int(size[0]/2),0)))
+    
+    def setPicture(self,image):
+        self.image = pygame.image.load(image + ".png")
+        self.image = pygame.transform.scale(self.image,self.size)
+        self.rect = pygame.Rect(self.image.get_rect(topleft = (int(size[0]/2),0)))
+
 def main():
     pygame.init()
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode(size)#,pygame.FULLSCREEN)
     index = 0
     games = deque([])
 
     for g in gameList:
         new = game(g)
         games.append(new)
+       
+    display = gameDisplay(games[2].name+"T")
 
     while True:
         screen.fill((255,255,255))
@@ -46,6 +62,10 @@ def main():
             games[i].setPos(pos)
             pos[1] += games[i].size[1]
             screen.blit(games[i].image,games[i].rect)
+        
+        pygame.draw.rect(screen,(0,255,0),games[2].rect,10)
+        display.setPicture(games[2].name+"T")
+        screen.blit(display.image,display.rect)
     
         pygame.display.flip()
 
