@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 
 charList = ["ryu","ken","chunLi"]
-size = (400,240)
+size = (400,240) #center for characters
 
 class move(pygame.sprite.Sprite):
     def __init__(self,image,screen):
