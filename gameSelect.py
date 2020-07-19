@@ -9,7 +9,7 @@ class game(pygame.sprite.Sprite):
     def __init__(self,image):
         pygame.sprite.Sprite.__init__(self)
         self.name = image
-        self.image = pygame.image.load(image + ".png")
+        self.image = pygame.image.load("gameNames/" + image + ".png")
         self.size = (int(size[0] / 2), int(size[1] / 5))
         self.image = pygame.transform.scale(self.image,self.size)
         self.rect = pygame.Rect(self.image.get_rect(topleft = (0,0)))
@@ -21,13 +21,13 @@ class gameDisplay(pygame.sprite.Sprite):
     def __init__(self,image):
         pygame.sprite.Sprite.__init__(self)
         self.name = image
-        self.image = pygame.image.load(image + ".png")
+        self.image = pygame.image.load("displays/" + image + ".png")
         self.size = (int(size[0] / 2), size[1])
         self.image = pygame.transform.scale(self.image,self.size)
         self.rect = pygame.Rect(self.image.get_rect(topleft = (int(size[0]/2),0)))
     
     def setPicture(self,image):
-        self.image = pygame.image.load(image + ".png")
+        self.image = pygame.image.load("displays/" + image + ".png")
         self.image = pygame.transform.scale(self.image,self.size)
         self.rect = pygame.Rect(self.image.get_rect(topleft = (int(size[0]/2),0)))
 
@@ -41,7 +41,7 @@ def main():
         new = game(g)
         games.append(new)
        
-    display = gameDisplay(games[2].name+"T")
+    display = gameDisplay(games[2].name)
 
     while True:
         screen.fill((255,255,255))
@@ -64,7 +64,7 @@ def main():
             screen.blit(games[i].image,games[i].rect)
         
         pygame.draw.rect(screen,(0,255,0),games[2].rect,10)
-        display.setPicture(games[2].name+"T")
+        display.setPicture(games[2].name)
         screen.blit(display.image,display.rect)
     
         pygame.display.flip()
