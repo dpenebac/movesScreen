@@ -1,8 +1,10 @@
 import pygame
 from pygame.locals import *
+import time
+import os
 
-charList = ["ryu","ken","chunLi"]
-size = (1300,1000)
+charList = ["sfcontrols","ryu","chunLi","dhalsim"]
+size = (800,400)
 
 class move(pygame.sprite.Sprite):
     def __init__(self,image,screen):
@@ -14,11 +16,27 @@ class move(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,size)
         self.rect = pygame.Rect(self.image.get_rect(center = (size[0] / 2, size[1] / 2)))
 
-def main():
+def send(cmd,*args):
+    pid, fd = os.forkpty()
+    if pid==0: # child
+        os.execlp(cmd,*args)
+    while True:
+        data = os.read(fd,1024)
+        print data
+        if "password:" in data:    # ssh prompt
+            os.write(fd,"UHfamily21\n")
+        elif data.endswith("$ "):  # bash prompt for input
+            os.write(fd,"/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ snes '/home/pi/RetroPie/roms/snes/The Legend of Zelda - A Link to the Past (U) [!].smc'\n")
+            os.write(fd,"exit\n")
+    #/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ snes '/home/pi/RetroPie/roms/snes/The Legend of Zelda - A Link to the Past (U) [!].smc'
+    #send("ssh", "ssh", "user@remote")
+
+def sf2CE():
     pygame.init()
     screen = pygame.display.set_mode(size)
-    background = move(charList[0] + ".png",screen)
+    background = move("sf2CEmoveList/" + charList[0] + ".png",screen)
     index = 0
+    background.changeImage("sf2CEmoveList/" + charList[0] + ".png",screen)
 
     while True:
         for event in pygame.event.get():
@@ -34,10 +52,11 @@ def main():
                     index = 0
                 elif index < 0:
                     index = len(charList) - 1
-                background.changeImage(charList[index] + ".png",screen)
+                background.changeImage("sf2CEmoveList/" + charList[index] + ".png",screen)
 
         screen.blit(background.image,background.rect)
         pygame.display.flip()
 
-if __name__ == '__main__':
-    main()
+def gameInstructions(game):
+    pygame.init()
+    pass
