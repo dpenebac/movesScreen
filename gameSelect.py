@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from collections import deque
-from sf2CEmoves import *
+from gameInstructions import *
 
 size = (800,400)
 gameList = ["streetFighter2CE","pacman","digDug","iceClimbers","donkeyKong","contra"]

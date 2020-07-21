@@ -22,7 +22,6 @@ def send(cmd,*args):
         os.execlp(cmd,*args)
     while True:
         data = os.read(fd,1024)
-        print data
         if "password:" in data:    # ssh prompt
             os.write(fd,"UHfamily21\n")
         elif data.endswith("$ "):  # bash prompt for input
@@ -57,6 +56,6 @@ def sf2CE():
         screen.blit(background.image,background.rect)
         pygame.display.flip()
 
-def gameInstructions(game):
+def Games(game):
     pygame.init()
     pass
